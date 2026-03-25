@@ -1,0 +1,53 @@
+// ══════════════════════════════════════════
+//  DATA CONSTANTS
+// ══════════════════════════════════════════
+
+const SPOILAGE = {
+    milk: { fridge: 7, shelf: 1, freezer: 90 },
+    curd: { fridge: 5, shelf: 0, freezer: 60 },
+    butter: { fridge: 30, shelf: 2, freezer: 240 },
+    cheese: { fridge: 14, shelf: 0, freezer: 180 },
+    egg: { fridge: 21, shelf: 7, freezer: 365 },
+    chicken: { fridge: 2, shelf: 0, freezer: 180 },
+    fish: { fridge: 2, shelf: 0, freezer: 180 },
+    mutton: { fridge: 3, shelf: 0, freezer: 120 },
+    spinach: { fridge: 4, shelf: 1, freezer: 30 },
+    tomato: { fridge: 7, shelf: 4, freezer: 60 },
+    onion: { fridge: 30, shelf: 14, freezer: 180 },
+    potato: { fridge: 30, shelf: 14, freezer: 180 },
+    carrot: { fridge: 14, shelf: 5, freezer: 365 },
+    capsicum: { fridge: 7, shelf: 3, freezer: 90 },
+    broccoli: { fridge: 5, shelf: 1, freezer: 365 },
+    bread: { fridge: 10, shelf: 5, freezer: 90 },
+    rice: { fridge: 5, shelf: 365, freezer: 730 },
+    dal: { fridge: 4, shelf: 180, freezer: 365 },
+    lemon: { fridge: 21, shelf: 7, freezer: 120 },
+    apple: { fridge: 30, shelf: 7, freezer: 240 },
+    banana: { fridge: 7, shelf: 4, freezer: 60 },
+    mango: { fridge: 7, shelf: 3, freezer: 120 },
+};
+
+const PRICES = {
+    milk: 25,
+    curd: 20,
+    butter: 60,
+    cheese: 120,
+    egg: 6,
+    chicken: 120,
+    fish: 150,
+    mutton: 200,
+    spinach: 15,
+    tomato: 10,
+    onion: 8,
+    potato: 12,
+    carrot: 15,
+    capsicum: 30,
+    broccoli: 40,
+    bread: 30,
+    rice: 5,
+    dal: 10,
+    lemon: 5,
+    apple: 20,
+    banana: 8,
+    mango: 40,
+};

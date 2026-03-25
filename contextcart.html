@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContextCart — Smart Kitchen Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <!-- ── NAVBAR ───────────────────────────────── -->
+    <nav class="navbar">
+        <div class="brand">
+            <div class="brand-icon">🥦</div>
+            <div>
+                <div class="brand-name">ContextCart</div>
+                <div class="brand-tag">Smart Kitchen Manager</div>
+            </div>
+        </div>
+        <div class="nav-tabs">
+            <button class="tab-btn active" onclick="showPage('inventory', this)">
+      🏠 My Items <span class="tab-badge" id="badge-items">0</span>
+    </button>
+            <button class="tab-btn" onclick="showPage('meals', this)">
+      🍽️ Meal Ideas
+    </button>
+            <button class="tab-btn" onclick="showPage('grocery', this)">
+      🛒 Grocery <span class="tab-badge" id="badge-grocery">0</span>
+    </button>
+            <button class="tab-btn" onclick="showPage('score', this)">
+      📊 Waste Score
+    </button>
+        </div>
+    </nav>
+
+    <!-- ── PAGE: INVENTORY ──────────────────────── -->
+    <div id="page-inventory" class="page active">
+
+        <div class="hero-strip">
+            <h2>Stop wasting food. Start saving money.</h2>
+            <p>Track your kitchen items, get smart recipe suggestions, and see how
+                <br> much food waste you 're preventing.</br>
+            </p>
+            <div class="hero-stats">
+                <div class="stat-pill">🟢 <span id="stat-fresh">0</span> fresh</div>
+                <div class="stat-pill">🟡 <span id="stat-warning">0</span> expiring soon</div>
+                <div class="stat-pill">🔴 <span id="stat-urgent">0</span> urgent</div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="add-form">
+                <h3>➕ Add a new item</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Item Name</label>
+                        <input type="text" id="itemName" placeholder="e.g. Spinach, Milk, grocery" autocomplete="off">
+                    </div>
+                    <div class="form-group">
+                        <label>Quantity</label>
+                        <input type="number" id="itemQty" placeholder="1" min="1" value="1">
+                    </div>
+                    <div class="form-group">
+                        <label>Storage</label>
+                        <select id="storageType">
+            <option value="fridge">🧊 Fridge</option>
+            <option value="shelf">📦 Shelf</option>
+            <option value="freezer">❄️ Freezer</option>
+          </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Purchase Date</label>
+                        <input type="date" id="purchaseDate">
+                    </div>
+                    <button class="add-btn" onclick="addItem()">Add Item</button>
+                </div>
+            </div>
+
+            <div class="filter-bar">
+                <button class="filter-chip active" onclick="setFilter('all ', this)">All Items</button>
+                <button class="filter-chip urgent-chip" onclick="setFilter('urgent ', this)">🔴 Urgent</button>
+                <button class="filter-chip warning-chip" onclick="setFilter('warning ', this)">🟡 Expiring Soon</button>
+                <button class="filter-chip" onclick="setFilter('fresh ', this)">🟢 Fresh</button>
+            </div>
+
+            <div id="itemCards" class="card-grid"></div>
+        </div>
+    </div>
+
+    <!-- ── PAGE: MEALS ───────────────────────────── -->
+    <div id="page-meals" class="page">
+        <div class="hero-strip">
+            <h2>Meal Ideas</h2>
+            <p>Recipes using ingredients that are expiring soonest — cook before they go bad.</p>
+        </div>
+        <div class="container">
+            <div class="api-notice" id="api-notice">
+                <strong>⚠️ API Key needed:</strong> Enter your free Spoonacular key to get live recipes.
+                <input type="text" id="apiKeyInput" placeholder="Paste your Spoonacular API key here">
+                <button class="api-save-btn" onclick="saveApiKey()">Save Key</button>
+                <a href="https://spoonacular.com/food-api" target="_blank" style="font-size:12px;color:#92400e;">Get free key →</a>
+            </div>
+
+            <div class="expiring-list" id="expiring-preview">
+                <p>Expiring soon:</p>
+            </div>
+
+            <div class="section-header">
+                <h2>Suggested Recipes</h2>
+                <button class="fetch-btn" id="fetch-btn" onclick="fetchMeals()">
+        🔍 Find Recipes
+      </button>
+            </div>
+
+            <div id="mealCards" class="card-grid"></div>
+        </div>
+    </div>
+
+    <!-- ── PAGE: GROCERY ─────────────────────────── -->
+    <div id="page-grocery" class="page">
+        <div class="hero-strip">
+            <h2>Smart Grocery List</h2>
+            <p>Only buy what you actually need — based on your planned meals.</p>
+        </div>
+        <div class="container">
+            <div id="grocery-header-wrap"></div>
+            <div id="groceryItems"></div>
+        </div>
+    </div>
+
+    <!-- ── PAGE: SCORE ───────────────────────────── -->
+    <div id="page-score" class="page">
+        <div class="container">
+            <div id="scoreContent"></div>
+        </div>
+    </div>
+
+    <!-- TOAST -->
+    <div class="toast" id="toast"></div>
+
+    <!-- ── SCRIPTS (load order matters) ─────────── -->
+    <script src="js/data.js"></script>
+    <script src="js/state.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/navigation.js"></script>
+    <script src="js/inventory.js"></script>
+    <script src="js/meals.js"></script>
+    <script src="js/grocery.js"></script>
+    <script src="js/score.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

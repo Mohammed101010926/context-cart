@@ -1,0 +1,815 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ContextCart — Smart Grocery Assistant | Login</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --g1: #0a2e1a;
+            --g2: #14532d;
+            --g3: #166534;
+            --g4: #16a34a;
+            --g5: #22c55e;
+            --g6: #bbf7d0;
+            --g7: #f0fdf4;
+            --amber: #f59e0b;
+            --amber-dark: #d97706;
+            --red: #dc2626;
+            --cream: #fafdf7;
+            --white: #ffffff;
+            --text: #0f1f14;
+            --muted: #5a7a65;
+            --border: #d1fae5;
+            --card-shadow: 0 20px 40px rgba(10, 46, 26, 0.12), 0 8px 24px rgba(0, 0, 0, 0.08);
+            --radius: 24px;
+            --radius-sm: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: linear-gradient(135deg, #0a2e1a 0%, #14532d 50%, #166534 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        /* Animated Background Elements */
+        
+        .bg-decoration {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 0;
+        }
+        
+        .floating-item {
+            position: absolute;
+            font-size: 2rem;
+            opacity: 0.1;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%,
+            100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-30px) rotate(10deg);
+            }
+        }
+        
+        .floating-item:nth-child(1) {
+            top: 10%;
+            left: 5%;
+            animation-duration: 18s;
+            font-size: 4rem;
+        }
+        
+        .floating-item:nth-child(2) {
+            top: 70%;
+            left: 85%;
+            animation-duration: 22s;
+            font-size: 3.5rem;
+            animation-delay: -5s;
+        }
+        
+        .floating-item:nth-child(3) {
+            top: 40%;
+            left: 15%;
+            animation-duration: 25s;
+            font-size: 2.5rem;
+            animation-delay: -2s;
+        }
+        
+        .floating-item:nth-child(4) {
+            top: 85%;
+            left: 20%;
+            animation-duration: 20s;
+            font-size: 3rem;
+            animation-delay: -8s;
+        }
+        
+        .floating-item:nth-child(5) {
+            top: 15%;
+            left: 80%;
+            animation-duration: 28s;
+            font-size: 3rem;
+            animation-delay: -12s;
+        }
+        
+        .floating-item:nth-child(6) {
+            top: 50%;
+            left: 45%;
+            animation-duration: 24s;
+            font-size: 2rem;
+            animation-delay: -3s;
+        }
+        
+        .floating-item:nth-child(7) {
+            top: 30%;
+            left: 92%;
+            animation-duration: 30s;
+            font-size: 2.5rem;
+            animation-delay: -15s;
+        }
+        
+        .floating-item:nth-child(8) {
+            top: 75%;
+            left: 8%;
+            animation-duration: 26s;
+            font-size: 3rem;
+            animation-delay: -7s;
+        }
+        /* Main Container */
+        
+        .login-container {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem;
+            display: flex;
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            animation: fadeInUp 0.6s ease-out;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* Left Side - Hero Section */
+        
+        .login-hero {
+            flex: 1;
+            background: linear-gradient(135deg, var(--g1) 0%, var(--g3) 100%);
+            padding: 3rem 2.5rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-hero::before {
+            content: '🍳';
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            font-size: 200px;
+            opacity: 0.08;
+            pointer-events: none;
+            transform: rotate(-15deg);
+        }
+        
+        .login-hero::after {
+            content: '🥘';
+            position: absolute;
+            top: -40px;
+            left: -40px;
+            font-size: 180px;
+            opacity: 0.08;
+            pointer-events: none;
+            transform: rotate(10deg);
+        }
+        
+        .brand-icon-large {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 2rem;
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.75rem 1.5rem;
+            border-radius: 60px;
+            width: fit-content;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        
+        .brand-icon-large .icon-box {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--g5), var(--g4));
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.3);
+        }
+        
+        .brand-icon-large .brand-text {
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: white;
+            letter-spacing: -0.5px;
+        }
+        
+        .brand-icon-large .brand-sub {
+            font-size: 10px;
+            opacity: 0.7;
+            letter-spacing: 1px;
+        }
+        
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 800;
+            color: white;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .hero-title span {
+            background: linear-gradient(135deg, var(--g5), var(--g6));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
+        }
+        
+        .hero-description {
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 85%;
+        }
+        
+        .chef-quote {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: var(--radius-sm);
+            padding: 1.25rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            margin-top: 1.5rem;
+        }
+        
+        .chef-quote p {
+            color: rgba(255, 255, 255, 0.9);
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 0.5rem;
+        }
+        
+        .chef-quote .author {
+            font-size: 0.8rem;
+            opacity: 0.7;
+            font-style: normal;
+            font-weight: 500;
+        }
+        
+        .feature-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            color: rgba(255, 255, 255, 0.85);
+            font-size: 0.9rem;
+        }
+        
+        .feature-item span:first-child {
+            font-size: 1.2rem;
+        }
+        /* Right Side - Login Form */
+        
+        .login-form-section {
+            flex: 0.9;
+            padding: 3rem 2.5rem;
+            background: var(--white);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form-header {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        
+        .form-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--g1);
+            margin-bottom: 0.5rem;
+        }
+        
+        .form-header p {
+            color: var(--muted);
+            font-size: 0.9rem;
+        }
+        
+        .login-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+        }
+        
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .input-group label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--muted);
+        }
+        
+        .input-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 1rem;
+            font-size: 1.1rem;
+            color: var(--muted);
+        }
+        
+        .input-wrapper input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 2.8rem;
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--g7);
+            transition: all 0.2s;
+            outline: none;
+            color: var(--text);
+        }
+        
+        .input-wrapper input:focus {
+            border-color: var(--g4);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+        }
+        
+        .input-wrapper input::placeholder {
+            color: #b9d2c4;
+        }
+        
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.85rem;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--muted);
+        }
+        
+        .checkbox-label input {
+            width: 1rem;
+            height: 1rem;
+            cursor: pointer;
+            accent-color: var(--g4);
+        }
+        
+        .forgot-link {
+            color: var(--g4);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+            cursor: pointer;
+        }
+        
+        .forgot-link:hover {
+            color: var(--g3);
+            text-decoration: underline;
+        }
+        
+        .login-btn {
+            background: linear-gradient(135deg, var(--g4), var(--g3));
+            color: white;
+            border: none;
+            padding: 1rem;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 0.5rem;
+            box-shadow: 0 4px 12px rgba(22, 163, 74, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        
+        .login-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.4);
+        }
+        
+        .login-btn:active {
+            transform: translateY(0);
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            margin: 1.5rem 0;
+            color: var(--muted);
+            font-size: 0.8rem;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .divider span {
+            margin: 0 1rem;
+        }
+        
+        .social-login {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+        
+        .social-btn {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            padding: 0.75rem;
+            background: var(--white);
+            border: 1.5px solid var(--border);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--text);
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .social-btn:hover {
+            background: var(--g7);
+            border-color: var(--g4);
+            transform: translateY(-2px);
+        }
+        
+        .social-btn span {
+            font-size: 1.1rem;
+        }
+        
+        .demo-note {
+            text-align: center;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+            font-size: 0.75rem;
+            color: var(--muted);
+        }
+        
+        .demo-note .demo-btn {
+            background: none;
+            border: none;
+            color: var(--g4);
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 0.75rem;
+            text-decoration: underline;
+            font-family: inherit;
+        }
+        
+        .demo-note .demo-btn:hover {
+            color: var(--g3);
+        }
+        /* Toast Notification */
+        
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(100px);
+            background: var(--g1);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 46, 26, 0.95);
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast.error {
+            background: var(--red);
+        }
+        /* Responsive */
+        
+        @media (max-width: 900px) {
+            .login-container {
+                flex-direction: column;
+                margin: 1rem;
+                max-width: 500px;
+            }
+            .login-hero {
+                padding: 2rem;
+            }
+            .hero-title {
+                font-size: 2rem;
+            }
+            .hero-description {
+                max-width: 100%;
+            }
+            .login-form-section {
+                padding: 2rem;
+            }
+            .floating-item {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .login-form-section {
+                padding: 1.5rem;
+            }
+            .hero-title {
+                font-size: 1.75rem;
+            }
+            .social-btn {
+                font-size: 0.8rem;
+            }
+            .toast {
+                white-space: normal;
+                text-align: center;
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Animated Background Decorations -->
+    <div class="bg-decoration">
+        <div class="floating-item">🍳</div>
+        <div class="floating-item">🥘</div>
+        <div class="floating-item">🍝</div>
+        <div class="floating-item">🥗</div>
+        <div class="floating-item">🍲</div>
+        <div class="floating-item">🥘</div>
+        <div class="floating-item">🍜</div>
+        <div class="floating-item">🥩</div>
+    </div>
+
+    <div class="login-container">
+        <!-- Left Side - Chef's Kitchen Hero -->
+        <div class="login-hero">
+            <div class="brand-icon-large">
+                <div class="icon-box">🥦</div>
+                <div>
+                    <div class="brand-text">ContextCart</div>
+                    <div class="brand-sub">Smart Kitchen Manager</div>
+                </div>
+            </div>
+
+            <div class="hero-title">
+                Welcome to <span>contextcart<br></span>
+            </div>
+
+            <div class="hero-description">
+                Where culinary passion meets professional excellence. Join our community of master chefs and reduce food waste while saving money.
+            </div>
+
+            <div class="chef-quote">
+                <p>"The secret to great cooking is using fresh ingredients before they go to waste. ContextCart helps you master both."</p>
+                <div class="author">— Executive Chef</div>
+            </div>
+
+            <div class="feature-list">
+                <div class="feature-item">
+                    <span>🥗</span>
+                    <span>Track expiring ingredients</span>
+                </div>
+                <div class="feature-item">
+                    <span>🍽️</span>
+                    <span>Smart recipe suggestions</span>
+                </div>
+                <div class="feature-item">
+                    <span>💰</span>
+                    <span>Save money, reduce waste</span>
+                </div>
+                <div class="feature-item">
+                    <span>🌱</span>
+                    <span>Track your environmental impact</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Login Form -->
+        <div class="login-form-section">
+            <div class="form-header">
+                <h2>Chef's Portal</h2>
+                <p>Sign in to your culinary workspace</p>
+            </div>
+
+            <form class="login-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label>Email Address</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">📧</span>
+                        <input type="email" id="email" placeholder="chef@kitchen.com" value="chef@kitchen.com">
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">🔒</span>
+                        <input type="password" id="password" placeholder="••••••••" value="chef123">
+                    </div>
+                </div>
+
+                <div class="form-options">
+                    <label class="checkbox-label">
+          <input type="checkbox" id="rememberMe"> Remember me
+        </label>
+                    <a class="forgot-link" onclick="showForgotMessage()">Forgot password?</a>
+                </div>
+
+                <button type="submit" class="login-btn">
+        <span>🔑</span> Sign In to Kitchen
+      </button>
+            </form>
+
+            <div class="divider">
+                <span>Or continue with</span>
+            </div>
+
+            <div class="social-login">
+                <button class="social-btn" onclick="socialLogin('google')">
+        <span>G</span> Google
+      </button>
+                <button class="social-btn" onclick="socialLogin('facebook')">
+        <span>f</span> Facebook
+      </button>
+            </div>
+
+            <div class="demo-note">
+                <p>✨ Demo credentials: <button class="demo-btn" onclick="fillDemoCredentials()">chef@kitchen.com / chef123</button></p>
+                <p style="margin-top: 0.5rem;">🍳 Click "Sign In" to enter your smart kitchen</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
+    <script>
+        // Toast notification function
+        let toastTimer;
+
+        function showToast(message, isError = false) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.className = 'toast show' + (isError ? ' error' : '');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Fill demo credentials
+        function fillDemoCredentials() {
+            document.getElementById('email').value = 'chef@kitchen.com';
+            document.getElementById('password').value = 'chef123';
+            showToast('✨ Demo credentials filled! Click Sign In to continue.');
+        }
+
+        // Forgot password handler
+        function showForgotMessage() {
+            showToast('📧 Reset link sent to your email (demo feature)', false);
+        }
+
+        // Social login handler
+        function socialLogin(provider) {
+            showToast(`🔐 ${provider.charAt(0).toUpperCase() + provider.slice(1)} login coming soon! Use demo login instead.`, false);
+        }
+
+        // Main login handler
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            const rememberMe = document.getElementById('rememberMe').checked;
+
+            // Simple validation
+            if (!email) {
+                showToast('❌ Please enter your email address', true);
+                return;
+            }
+
+            if (!password) {
+                showToast('❌ Please enter your password', true);
+                return;
+            }
+
+            // Demo credentials check
+            if (email === 'chef@kitchen.com' && password === 'chef123') {
+                // Store login session
+                if (rememberMe) {
+                    localStorage.setItem('contextcart_logged_in', 'true');
+                    localStorage.setItem('contextcart_user_email', email);
+                    localStorage.setItem('contextcart_user_name', 'Chef');
+                }
+                sessionStorage.setItem('contextcart_logged_in', 'true');
+                sessionStorage.setItem('contextcart_user_email', email);
+                sessionStorage.setItem('contextcart_user_name', 'Chef');
+
+                showToast('✅ Welcome back, Chef! Redirecting to your kitchen...', false);
+
+                // Redirect to main dashboard after short delay
+                setTimeout(() => {
+                    window.location.href = 'contextcart.html';
+                }, 1200);
+            } else {
+                showToast('❌ Invalid credentials. Use chef@kitchen.com / chef123', true);
+            }
+        }
+
+        // Check if user is already logged in (optional)
+        function checkExistingSession() {
+            const loggedIn = localStorage.getItem('contextcart_logged_in') || sessionStorage.getItem('contextcart_logged_in');
+            if (loggedIn === 'true') {
+                // Optional: Auto-redirect to dashboard
+                // window.location.href = 'contextcart.html';
+            }
+        }
+
+        // Run on page load
+        checkExistingSession();
+
+        // Add Enter key support
+        document.getElementById('password').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleLogin(e);
+            }
+        });
+    </script>
+</body>
+
+</html>
