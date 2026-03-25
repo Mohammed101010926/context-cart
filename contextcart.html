@@ -5,62 +5,1151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ContextCart — Smart Kitchen Manager</title>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+         :root {
+            --g1: #0a2e1a;
+            --g2: #14532d;
+            --g3: #166534;
+            --g4: #16a34a;
+            --g5: #22c55e;
+            --g6: #bbf7d0;
+            --g7: #f0fdf4;
+            --amber: #f59e0b;
+            --amber-bg: #fffbeb;
+            --red: #dc2626;
+            --red-bg: #fef2f2;
+            --cream: #fafdf7;
+            --white: #ffffff;
+            --text: #0f1f14;
+            --muted: #5a7a65;
+            --border: #d1fae5;
+            --card-shadow: 0 4px 24px rgba(10, 46, 26, 0.10);
+            --radius: 16px;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: var(--cream);
+            color: var(--text);
+            min-height: 100vh;
+        }
+        /* NAVBAR */
+        
+        .navbar {
+            background: var(--g1);
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            flex-wrap: wrap;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+            box-shadow: 0 4px 32px rgba(0, 0, 0, 0.25);
+        }
+        
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 16px 0;
+        }
+        
+        .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--g5), var(--g4));
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            box-shadow: 0 2px 12px rgba(34, 197, 94, 0.35);
+        }
+        
+        .brand-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            color: #fff;
+        }
+        
+        .brand-sub {
+            font-size: 10px;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        
+        .nav-tabs {
+            display: flex;
+            gap: 4px;
+            padding: 12px 0;
+        }
+        
+        .tab-btn {
+            background: transparent;
+            color: rgba(255, 255, 255, 0.55);
+            border: none;
+            padding: 8px 16px;
+            border-radius: 9px;
+            cursor: pointer;
+            font-size: 13.5px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 500;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            white-space: nowrap;
+        }
+        
+        .tab-btn:hover {
+            background: rgba(255, 255, 255, 0.09);
+            color: #fff;
+        }
+        
+        .tab-btn.active {
+            background: var(--g4);
+            color: #fff;
+            box-shadow: 0 2px 12px rgba(22, 163, 74, 0.4);
+        }
+        
+        .tab-badge {
+            background: rgba(255, 255, 255, 0.18);
+            border-radius: 20px;
+            padding: 1px 7px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+        
+        .tab-btn.active .tab-badge {
+            background: rgba(0, 0, 0, 0.18);
+        }
+        /* HERO */
+        
+        .hero {
+            background: linear-gradient(135deg, var(--g1) 0%, var(--g3) 60%, var(--g2) 100%);
+            padding: 40px 32px 36px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -60px;
+            right: -60px;
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+            pointer-events: none;
+        }
+        
+        .hero h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        
+        .hero p {
+            font-size: 15px;
+            opacity: 0.7;
+            max-width: 500px;
+        }
+        
+        .hero-stats {
+            display: flex;
+            gap: 16px;
+            margin-top: 24px;
+            flex-wrap: wrap;
+        }
+        
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 30px;
+            padding: 9px 18px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+        }
+        
+        .stat-pill b {
+            font-size: 17px;
+            font-weight: 700;
+        }
+        /* PAGES */
+        
+        .page {
+            display: none;
+        }
+        
+        .page.active {
+            display: block;
+        }
+        
+        .container {
+            max-width: 980px;
+            margin: auto;
+            padding: 32px 24px;
+        }
+        /* SECTION HEADER */
+        
+        .section-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .section-header h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--g1);
+        }
+        
+        .section-header p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+        /* ADD FORM */
+        
+        .add-form {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1px solid var(--border);
+            margin-bottom: 32px;
+        }
+        
+        .add-form-title {
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--g3);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 2fr 0.8fr 1fr 1.2fr auto;
+            gap: 12px;
+            align-items: end;
+        }
+        
+        .form-group label {
+            display: block;
+            font-size: 11px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--muted);
+            margin-bottom: 7px;
+        }
+        
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid #e2f5ea;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            color: var(--text);
+            background: var(--g7);
+            transition: all 0.2s;
+            outline: none;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--g5);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.12);
+        }
+        
+        .add-btn {
+            background: linear-gradient(135deg, var(--g4), var(--g3));
+            color: white;
+            border: none;
+            padding: 11px 24px;
+            border-radius: 10px;
+            font-size: 14px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            height: 44px;
+            box-shadow: 0 2px 12px rgba(22, 163, 74, 0.3);
+        }
+        
+        .add-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 18px rgba(22, 163, 74, 0.4);
+        }
+        /* FILTER BAR */
+        
+        .filter-bar {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 22px;
+            flex-wrap: wrap;
+        }
+        
+        .filter-chip {
+            padding: 7px 16px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            border: 1.5px solid #e2f5ea;
+            background: white;
+            color: var(--muted);
+            transition: all 0.18s;
+        }
+        
+        .filter-chip:hover {
+            border-color: var(--g5);
+            color: var(--g3);
+        }
+        
+        .filter-chip.active {
+            border-color: var(--g4);
+            background: var(--g7);
+            color: var(--g3);
+        }
+        
+        .filter-chip.chip-urgent.active {
+            border-color: var(--red);
+            background: var(--red-bg);
+            color: var(--red);
+        }
+        
+        .filter-chip.chip-warning.active {
+            border-color: var(--amber);
+            background: var(--amber-bg);
+            color: #92400e;
+        }
+        /* ITEM CARDS */
+        
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 18px;
+        }
+        
+        .item-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1.5px solid var(--border);
+            position: relative;
+            transition: transform 0.2s, box-shadow 0.2s;
+            animation: fadeUp 0.3s ease both;
+        }
+        
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(14px)
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0)
+            }
+        }
+        
+        .item-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 32px rgba(10, 46, 26, 0.14);
+        }
+        
+        .item-card.fresh {
+            border-top: 4px solid var(--g5);
+        }
+        
+        .item-card.warning {
+            border-top: 4px solid var(--amber);
+        }
+        
+        .item-card.urgent {
+            border-top: 4px solid var(--red);
+        }
+        
+        .item-card.expired {
+            border-top: 4px solid #9ca3af;
+            opacity: 0.7;
+        }
+        
+        .card-storage-tag {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--muted);
+            background: var(--g7);
+            border-radius: 6px;
+            padding: 3px 8px;
+        }
+        
+        .card-name {
+            font-family: 'Playfair Display', serif;
+            font-size: 19px;
+            font-weight: 700;
+            text-transform: capitalize;
+            margin-bottom: 4px;
+            padding-right: 60px;
+        }
+        
+        .card-qty {
+            font-size: 13px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+        
+        .days-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 5px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+        }
+        
+        .fresh .days-badge {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        
+        .warning .days-badge {
+            background: #fef3c7;
+            color: #92400e;
+        }
+        
+        .urgent .days-badge {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+        
+        .expired .days-badge {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+        
+        .expiry-track {
+            background: #f1f5f9;
+            height: 4px;
+            border-radius: 4px;
+            margin-bottom: 14px;
+            overflow: hidden;
+        }
+        
+        .expiry-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.4s ease;
+        }
+        
+        .fresh .expiry-fill {
+            background: var(--g5);
+        }
+        
+        .warning .expiry-fill {
+            background: var(--amber);
+        }
+        
+        .urgent .expiry-fill {
+            background: var(--red);
+        }
+        
+        .expired .expiry-fill {
+            background: #9ca3af;
+            width: 0!important;
+        }
+        
+        .card-price {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 14px;
+        }
+        
+        .card-actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .used-btn {
+            flex: 1;
+            background: var(--g7);
+            color: var(--g3);
+            border: 1.5px solid var(--border);
+            padding: 7px 0;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.18s;
+        }
+        
+        .used-btn:hover {
+            background: var(--g6);
+            border-color: var(--g4);
+        }
+        
+        .remove-btn {
+            background: #fff0f0;
+            color: var(--red);
+            border: 1.5px solid #fecaca;
+            padding: 7px 12px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: all 0.18s;
+        }
+        
+        .remove-btn:hover {
+            background: var(--red-bg);
+        }
+        /* EMPTY STATE */
+        
+        .empty-state {
+            text-align: center;
+            padding: 60px 24px;
+            color: var(--muted);
+            grid-column: 1/-1;
+        }
+        
+        .empty-icon {
+            font-size: 48px;
+            margin-bottom: 14px;
+        }
+        
+        .empty-state h3 {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+        
+        .empty-state p {
+            font-size: 14px;
+        }
+        /* API NOTICE */
+        
+        .api-notice {
+            background: linear-gradient(135deg, #fff7ed, #fffbeb);
+            border: 1.5px solid #fed7aa;
+            border-radius: var(--radius);
+            padding: 22px 24px;
+            margin-bottom: 28px;
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+        
+        .api-notice-icon {
+            font-size: 28px;
+        }
+        
+        .api-notice-text h3 {
+            font-size: 15px;
+            font-weight: 700;
+            margin-bottom: 4px;
+            color: #92400e;
+        }
+        
+        .api-notice-text p {
+            font-size: 13px;
+            color: #b45309;
+        }
+        
+        .api-input-row {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+            margin-top: 12px;
+        }
+        
+        .api-input-row input {
+            flex: 1;
+            min-width: 240px;
+            padding: 10px 14px;
+            border: 1.5px solid #fed7aa;
+            border-radius: 10px;
+            font-size: 13px;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: #fff;
+            outline: none;
+        }
+        
+        .api-input-row input:focus {
+            border-color: var(--amber);
+        }
+        
+        .save-key-btn {
+            background: #f59e0b;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .save-key-btn:hover {
+            background: #d97706;
+        }
+        /* EXPIRING PREVIEW */
+        
+        .expiring-preview {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 18px 22px;
+            margin-bottom: 24px;
+            border: 1.5px solid var(--border);
+            box-shadow: var(--card-shadow);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        
+        .expiring-preview p {
+            font-size: 13px;
+            color: var(--muted);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+        
+        .ing-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            background: var(--g7);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4px 12px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--g3);
+        }
+        
+        .ing-tag.urgent-tag {
+            background: #fee2e2;
+            border-color: #fca5a5;
+            color: var(--red);
+        }
+        /* FIND BTN */
+        
+        .find-btn {
+            background: linear-gradient(135deg, var(--g4), var(--g3));
+            color: white;
+            border: none;
+            padding: 13px 28px;
+            border-radius: 10px;
+            font-size: 15px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 14px rgba(22, 163, 74, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .find-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 22px rgba(22, 163, 74, 0.4);
+        }
+        
+        .find-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        /* MEAL CARDS */
+        
+        .meals-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+        
+        .meal-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            overflow: hidden;
+            box-shadow: var(--card-shadow);
+            border: 1.5px solid var(--border);
+            cursor: pointer;
+            transition: all 0.22s;
+            animation: fadeUp 0.3s ease both;
+        }
+        
+        .meal-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 36px rgba(10, 46, 26, 0.16);
+        }
+        
+        .meal-card img {
+            width: 100%;
+            height: 175px;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .meal-img-ph {
+            width: 100%;
+            height: 175px;
+            background: var(--g7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 42px;
+        }
+        
+        .meal-info {
+            padding: 18px;
+        }
+        
+        .meal-info h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 10px;
+            line-height: 1.3;
+        }
+        
+        .meal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+        
+        .meal-tag {
+            font-size: 11px;
+            font-weight: 600;
+            padding: 3px 9px;
+            border-radius: 12px;
+            background: #dcfce7;
+            color: var(--g3);
+        }
+        
+        .meal-tag.miss {
+            background: #fee2e2;
+            color: var(--red);
+        }
+        
+        .meal-cta {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--g4);
+        }
+        /* GROCERY */
+        
+        .grocery-header {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 20px 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--card-shadow);
+            border: 1.5px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+        
+        .grocery-header h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .grocery-header p {
+            font-size: 14px;
+            color: var(--muted);
+            margin-top: 3px;
+        }
+        
+        .clear-btn {
+            background: var(--red-bg);
+            color: var(--red);
+            border: 1.5px solid #fca5a5;
+            padding: 8px 18px;
+            border-radius: 9px;
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.18s;
+        }
+        
+        .clear-btn:hover {
+            background: #fee2e2;
+        }
+        
+        .grocery-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .grocery-item {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px 20px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            cursor: pointer;
+            border: 1.5px solid var(--border);
+            box-shadow: 0 2px 10px rgba(10, 46, 26, 0.06);
+            transition: all 0.18s;
+            animation: fadeUp 0.25s ease both;
+        }
+        
+        .grocery-item:hover {
+            border-color: var(--g4);
+            background: var(--g7);
+        }
+        
+        .grocery-item.bought {
+            opacity: 0.5;
+        }
+        
+        .grocery-item.bought .g-name {
+            text-decoration: line-through;
+            color: var(--muted);
+        }
+        
+        .g-check {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #d1d5db;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            transition: all 0.2s;
+            font-size: 12px;
+        }
+        
+        .grocery-item.bought .g-check {
+            background: var(--g4);
+            border-color: var(--g4);
+            color: white;
+        }
+        
+        .g-name {
+            font-size: 15px;
+            font-weight: 600;
+            flex: 1;
+            text-transform: capitalize;
+        }
+        
+        .g-recipe {
+            font-size: 12px;
+            color: var(--muted);
+            white-space: nowrap;
+        }
+        /* SCORE */
+        
+        .score-hero {
+            background: linear-gradient(135deg, var(--g1) 0%, var(--g3) 100%);
+            border-radius: var(--radius);
+            padding: 40px 36px;
+            color: white;
+            text-align: center;
+            margin-bottom: 28px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .score-hero::before {
+            content: '🌱';
+            font-size: 120px;
+            opacity: 0.06;
+            top: -10px;
+            right: -10px;
+            position: absolute;
+            pointer-events: none;
+        }
+        
+        .score-label {
+            font-size: 13px;
+            opacity: 0.6;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 12px;
+        }
+        
+        .score-amount {
+            font-family: 'Playfair Display', serif;
+            font-size: 58px;
+            font-weight: 700;
+            line-height: 1;
+            margin-bottom: 10px;
+            color: var(--g5);
+        }
+        
+        .score-sub {
+            font-size: 15px;
+            opacity: 0.7;
+        }
+        
+        .score-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 16px;
+            margin-bottom: 28px;
+        }
+        
+        .score-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px 20px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            border: 1.5px solid var(--border);
+            animation: fadeUp 0.3s ease both;
+        }
+        
+        .sc-icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+        
+        .sc-val {
+            font-family: 'Playfair Display', serif;
+            font-size: 26px;
+            font-weight: 700;
+            color: var(--g3);
+            margin-bottom: 6px;
+        }
+        
+        .sc-label {
+            font-size: 13px;
+            color: var(--muted);
+        }
+        
+        .inventory-breakdown {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            border: 1.5px solid var(--border);
+        }
+        
+        .breakdown-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: 18px;
+            color: var(--g1);
+        }
+        
+        .breakdown-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 14px;
+        }
+        
+        .breakdown-row:last-child {
+            border-bottom: none;
+        }
+        
+        .breakdown-name {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        
+        .breakdown-val {
+            font-weight: 700;
+            color: var(--g3);
+        }
+        /* LOADER */
+        
+        .loader {
+            grid-column: 1/-1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 60px 24px;
+            color: var(--muted);
+            font-size: 15px;
+        }
+        
+        .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid var(--border);
+            border-top-color: var(--g4);
+            border-radius: 50%;
+            animation: spin 0.75s linear infinite;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+        /* TOAST */
+        
+        .toast {
+            position: fixed;
+            bottom: 28px;
+            left: 50%;
+            transform: translateX(-50%) translateY(80px);
+            background: var(--g1);
+            color: white;
+            padding: 13px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            z-index: 9999;
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            white-space: nowrap;
+        }
+        
+        .toast.show {
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .toast.error {
+            background: var(--red);
+        }
+        /* RESPONSIVE */
+        
+        @media(max-width:700px) {
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+            .form-row .add-btn-wrap {
+                grid-column: 1/-1;
+            }
+            .nav-tabs {
+                flex-wrap: wrap;
+            }
+            .score-amount {
+                font-size: 42px;
+            }
+            .hero h2 {
+                font-size: 24px;
+            }
+        }
+        
+        @media(max-width:480px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            .navbar {
+                padding: 0 16px;
+            }
+            .container {
+                padding: 20px 16px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-    <!-- ── NAVBAR ───────────────────────────────── -->
+    <!-- NAVBAR -->
     <nav class="navbar">
         <div class="brand">
             <div class="brand-icon">🥦</div>
             <div>
                 <div class="brand-name">ContextCart</div>
-                <div class="brand-tag">Smart Kitchen Manager</div>
+                <div class="brand-sub">Smart Kitchen Manager</div>
             </div>
         </div>
         <div class="nav-tabs">
-            <button class="tab-btn active" onclick="showPage('inventory', this)">
-      🏠 My Items <span class="tab-badge" id="badge-items">0</span>
-    </button>
-            <button class="tab-btn" onclick="showPage('meals', this)">
-      🍽️ Meal Ideas
-    </button>
-            <button class="tab-btn" onclick="showPage('grocery', this)">
-      🛒 Grocery <span class="tab-badge" id="badge-grocery">0</span>
-    </button>
-            <button class="tab-btn" onclick="showPage('score', this)">
-      📊 Waste Score
-    </button>
+            <button class="tab-btn active" onclick="showPage('inventory',this)">🥗 My Items <span class="tab-badge" id="badge-items">0</span></button>
+            <button class="tab-btn" onclick="showPage('meals',this)">🍽️ Meal Ideas</button>
+            <button class="tab-btn" onclick="showPage('grocery',this)">🛒 Grocery <span class="tab-badge" id="badge-grocery">0</span></button>
+            <button class="tab-btn" onclick="showPage('score',this)">♻️ Waste Score</button>
         </div>
     </nav>
 
-    <!-- ── PAGE: INVENTORY ──────────────────────── -->
-    <div id="page-inventory" class="page active">
-
-        <div class="hero-strip">
-            <h2>Stop wasting food. Start saving money.</h2>
-            <p>Track your kitchen items, get smart recipe suggestions, and see how
-                <br> much food waste you 're preventing.</br>
-            </p>
-            <div class="hero-stats">
-                <div class="stat-pill">🟢 <span id="stat-fresh">0</span> fresh</div>
-                <div class="stat-pill">🟡 <span id="stat-warning">0</span> expiring soon</div>
-                <div class="stat-pill">🔴 <span id="stat-urgent">0</span> urgent</div>
-            </div>
+    <!-- HERO -->
+    <div class="hero">
+        <h2>Stop wasting food. Start saving money.</h2>
+        <p>Track your kitchen items, get smart recipe suggestions, and see how much food waste you're preventing.</p>
+        <div class="hero-stats">
+            <div class="stat-pill">🥗 <b id="hero-items">0</b> items tracked</div>
+            <div class="stat-pill">⏰ <b id="hero-expiring">0</b> expiring soon</div>
+            <div class="stat-pill">💰 ₹<b id="hero-saved">0</b> saved from waste</div>
         </div>
+    </div>
 
+    <!-- PAGE: INVENTORY -->
+    <div class="page active" id="page-inventory">
         <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>Kitchen Inventory</h2>
+                    <p>Track everything with smart expiry alerts</p>
+                </div>
+            </div>
             <div class="add-form">
-                <h3>➕ Add a new item</h3>
+                <div class="add-form-title">➕ Add New Item</div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>Item Name</label>
-                        <input type="text" id="itemName" placeholder="e.g. Spinach, Milk, grocery" autocomplete="off">
+                        <input type="text" id="itemName" placeholder="e.g. spinach, milk, tomato" autocomplete="off">
                     </div>
                     <div class="form-group">
-                        <label>Quantity</label>
+                        <label>Qty</label>
                         <input type="number" id="itemQty" placeholder="1" min="1" value="1">
                     </div>
                     <div class="form-group">
@@ -75,65 +1164,85 @@
                         <label>Purchase Date</label>
                         <input type="date" id="purchaseDate">
                     </div>
-                    <button class="add-btn" onclick="addItem()">Add Item</button>
+                    <div class="form-group add-btn-wrap">
+                        <label style="visibility:hidden">x</label>
+                        <button class="add-btn" onclick="addItem()">+ Add Item</button>
+                    </div>
                 </div>
             </div>
-
             <div class="filter-bar">
-                <button class="filter-chip active" onclick="setFilter('all ', this)">All Items</button>
-                <button class="filter-chip urgent-chip" onclick="setFilter('urgent ', this)">🔴 Urgent</button>
-                <button class="filter-chip warning-chip" onclick="setFilter('warning ', this)">🟡 Expiring Soon</button>
-                <button class="filter-chip" onclick="setFilter('fresh ', this)">🟢 Fresh</button>
+                <button class="filter-chip active" onclick="setFilter('all',this)">All Items</button>
+                <button class="filter-chip chip-urgent" onclick="setFilter('urgent',this)">🔴 Urgent (≤2 days)</button>
+                <button class="filter-chip chip-warning" onclick="setFilter('warning',this)">🟡 Expiring Soon</button>
+                <button class="filter-chip" onclick="setFilter('fresh',this)">🟢 Fresh</button>
             </div>
-
-            <div id="itemCards" class="card-grid"></div>
+            <div class="card-grid" id="itemCards"></div>
         </div>
     </div>
 
-    <!-- ── PAGE: MEALS ───────────────────────────── -->
-    <div id="page-meals" class="page">
-        <div class="hero-strip">
-            <h2>Meal Ideas</h2>
-            <p>Recipes using ingredients that are expiring soonest — cook before they go bad.</p>
-        </div>
+    <!-- PAGE: MEALS -->
+    <div class="page" id="page-meals">
         <div class="container">
-            <div class="api-notice" id="api-notice">
-                <strong>⚠️ API Key needed:</strong> Enter your free Spoonacular key to get live recipes.
-                <input type="text" id="apiKeyInput" placeholder="Paste your Spoonacular API key here">
-                <button class="api-save-btn" onclick="saveApiKey()">Save Key</button>
-                <a href="https://spoonacular.com/food-api" target="_blank" style="font-size:12px;color:#92400e;">Get free key →</a>
-            </div>
-
-            <div class="expiring-list" id="expiring-preview">
-                <p>Expiring soon:</p>
-            </div>
-
             <div class="section-header">
-                <h2>Suggested Recipes</h2>
-                <button class="fetch-btn" id="fetch-btn" onclick="fetchMeals()">
-        🔍 Find Recipes
-      </button>
+                <div>
+                    <h2>Meal Ideas</h2>
+                    <p>Recipes using your expiring ingredients — reduce waste deliciously</p>
+                </div>
             </div>
-
-            <div id="mealCards" class="card-grid"></div>
+            <div class="api-notice" id="api-notice">
+                <div class="api-notice-icon">🔑</div>
+                <div style="flex:1">
+                    <div class="api-notice-text">
+                        <h3>Add your free Spoonacular API Key to unlock recipes</h3>
+                        <p>Sign up free at spoonacular.com/food-api → Profile → copy your API key</p>
+                    </div>
+                    <div class="api-input-row">
+                        <input type="text" id="apiKeyInput" placeholder="Paste your Spoonacular API key here…">
+                        <button class="save-key-btn" onclick="saveApiKey()">Save Key ✓</button>
+                    </div>
+                </div>
+            </div>
+            <div class="expiring-preview" id="expiring-preview"></div>
+            <button class="find-btn" id="find-btn" onclick="fetchMeals()">🔍 Find Recipes</button>
+            <div class="meals-grid" id="mealCards">
+                <div class="empty-state" style="grid-column:1/-1">
+                    <div class="empty-icon">🍽️</div>
+                    <h3>Ready to find recipes?</h3>
+                    <p>Click "Find Recipes" to get meal ideas using your expiring items.</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ── PAGE: GROCERY ─────────────────────────── -->
-    <div id="page-grocery" class="page">
-        <div class="hero-strip">
-            <h2>Smart Grocery List</h2>
-            <p>Only buy what you actually need — based on your planned meals.</p>
-        </div>
+    <!-- PAGE: GROCERY -->
+    <div class="page" id="page-grocery">
         <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>Grocery List</h2>
+                    <p>Missing ingredients from your chosen recipes</p>
+                </div>
+            </div>
             <div id="grocery-header-wrap"></div>
-            <div id="groceryItems"></div>
+            <div class="grocery-list" id="groceryItems">
+                <div class="empty-state">
+                    <div class="empty-icon">🛒</div>
+                    <h3>Your grocery list is empty</h3>
+                    <p>Go to Meal Ideas, pick a recipe, and the missing ingredients will appear here!</p>
+                </div>
+            </div>
         </div>
     </div>
 
-    <!-- ── PAGE: SCORE ───────────────────────────── -->
-    <div id="page-score" class="page">
+    <!-- PAGE: SCORE -->
+    <div class="page" id="page-score">
         <div class="container">
+            <div class="section-header">
+                <div>
+                    <h2>Waste Score</h2>
+                    <p>Your environmental and financial impact</p>
+                </div>
+            </div>
             <div id="scoreContent"></div>
         </div>
     </div>
@@ -141,17 +1250,491 @@
     <!-- TOAST -->
     <div class="toast" id="toast"></div>
 
-    <!-- ── SCRIPTS (load order matters) ─────────── -->
-    <script src="js/data.js"></script>
-    <script src="js/state.js"></script>
-    <script src="js/utils.js"></script>
-    <script src="js/navigation.js"></script>
-    <script src="js/inventory.js"></script>
-    <script src="js/meals.js"></script>
-    <script src="js/grocery.js"></script>
-    <script src="js/score.js"></script>
-    <script src="js/app.js"></script>
+    <script>
+        // ======================== DATA & STORAGE ========================
+        const SPOILAGE = {
+            milk: {
+                fridge: 7,
+                shelf: 1,
+                freezer: 90
+            },
+            spinach: {
+                fridge: 4,
+                shelf: 1,
+                freezer: 30
+            },
+            tomato: {
+                fridge: 7,
+                shelf: 4,
+                freezer: 60
+            },
+            bread: {
+                fridge: 10,
+                shelf: 5,
+                freezer: 90
+            },
+            chicken: {
+                fridge: 2,
+                shelf: 0,
+                freezer: 180
+            },
+            egg: {
+                fridge: 21,
+                shelf: 7,
+                freezer: 365
+            },
+            curd: {
+                fridge: 5,
+                shelf: 0,
+                freezer: 60
+            },
+            onion: {
+                fridge: 30,
+                shelf: 14,
+                freezer: 180
+            },
+            rice: {
+                fridge: 5,
+                shelf: 365,
+                freezer: 730
+            },
+            butter: {
+                fridge: 30,
+                shelf: 2,
+                freezer: 240
+            },
+            potato: {
+                fridge: 21,
+                shelf: 14,
+                freezer: 365
+            },
+            apple: {
+                fridge: 30,
+                shelf: 7,
+                freezer: 240
+            },
+            banana: {
+                fridge: 7,
+                shelf: 3,
+                freezer: 90
+            },
+            carrot: {
+                fridge: 21,
+                shelf: 3,
+                freezer: 365
+            },
+            cheese: {
+                fridge: 21,
+                shelf: 1,
+                freezer: 180
+            },
+            paneer: {
+                fridge: 4,
+                shelf: 0,
+                freezer: 90
+            },
+            lemon: {
+                fridge: 21,
+                shelf: 7,
+                freezer: 120
+            },
+            ginger: {
+                fridge: 21,
+                shelf: 7,
+                freezer: 180
+            },
+            garlic: {
+                fridge: 30,
+                shelf: 14,
+                freezer: 365
+            },
+            cabbage: {
+                fridge: 14,
+                shelf: 3,
+                freezer: 180
+            },
+        };
 
+        const PRICES = {
+            milk: 20,
+            spinach: 15,
+            chicken: 120,
+            bread: 30,
+            tomato: 10,
+            egg: 6,
+            curd: 20,
+            onion: 8,
+            rice: 60,
+            butter: 50,
+            potato: 20,
+            apple: 30,
+            banana: 5,
+            carrot: 15,
+            cheese: 80,
+            paneer: 60,
+            lemon: 5,
+            ginger: 10,
+            garlic: 10,
+            cabbage: 20,
+        };
+
+        let groceryList = JSON.parse(localStorage.getItem('groceryList') || '[]');
+        let savedItems = JSON.parse(localStorage.getItem('savedItems') || '[]');
+        let currentFilter = 'all';
+
+        const getItems = () => JSON.parse(localStorage.getItem('items') || '[]');
+        const saveItems = arr => localStorage.setItem('items', JSON.stringify(arr));
+        const getApiKey = () => localStorage.getItem('spoon_api_key') || '';
+
+        function getDaysLeft(item) {
+            const exp = new Date(item.date);
+            exp.setDate(exp.getDate() + item.shelfLife);
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            return Math.ceil((exp - today) / 86400000);
+        }
+
+        function getCardClass(d) {
+            return d <= 0 ? 'expired' : d <= 2 ? 'urgent' : d <= 5 ? 'warning' : 'fresh';
+        }
+
+        function daysLabel(d) {
+            if (d <= 0) return '⛔ Expired';
+            if (d === 1) return '🔴 1 day left';
+            if (d <= 2) return `🔴 ${d} days left`;
+            if (d <= 5) return `🟡 ${d} days left`;
+            return `🟢 ${d} days left`;
+        }
+
+        // ======================== NAVIGATION ========================
+        function showPage(id, btn) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            document.getElementById('page-' + id).classList.add('active');
+            if (btn) btn.classList.add('active');
+            if (id === 'meals') renderMealsPage();
+            if (id === 'score') renderScore();
+            if (id === 'grocery') renderGroceryPage();
+            updateHero();
+        }
+
+        function updateHero() {
+            const items = getItems();
+            const expiring = items.filter(i => {
+                const d = getDaysLeft(i);
+                return d <= 4 && d > 0;
+            }).length;
+            const saved = items.filter(i => getDaysLeft(i) > 0).reduce((s, i) => s + (PRICES[i.name] || 15) * i.qty, 0);
+            document.getElementById('hero-items').textContent = items.length;
+            document.getElementById('hero-expiring').textContent = expiring;
+            document.getElementById('hero-saved').textContent = saved;
+        }
+
+        function updateBadges() {
+            document.getElementById('badge-items').textContent = getItems().length;
+            document.getElementById('badge-grocery').textContent = groceryList.filter(g => !g.bought).length;
+        }
+
+        // ======================== INVENTORY ========================
+        function setFilter(f, el) {
+            currentFilter = f;
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            el.classList.add('active');
+            renderCards();
+        }
+
+        function addItem() {
+            const name = document.getElementById('itemName').value.trim().toLowerCase();
+            const qty = parseInt(document.getElementById('itemQty').value) || 1;
+            const storage = document.getElementById('storageType').value;
+            const date = document.getElementById('purchaseDate').value;
+            if (!name) {
+                toast('Please enter an item name!', true);
+                return;
+            }
+            if (!date) {
+                toast('Please select a purchase date!', true);
+                return;
+            }
+            const rule = SPOILAGE[name] || {
+                fridge: 7,
+                shelf: 3,
+                freezer: 90
+            };
+            const shelfLife = rule[storage];
+            const items = getItems();
+            items.push({
+                id: Date.now(),
+                name,
+                qty,
+                storage,
+                date,
+                shelfLife
+            });
+            saveItems(items);
+            renderCards();
+            updateHero();
+            updateBadges();
+            toast(`✅ ${name} added to your kitchen!`);
+            document.getElementById('itemName').value = '';
+            document.getElementById('itemQty').value = '1';
+            document.getElementById('purchaseDate').value = '';
+        }
+
+        function removeItem(id) {
+            saveItems(getItems().filter(i => i.id !== id));
+            renderCards();
+            updateHero();
+            updateBadges();
+            toast('🗑️ Item removed');
+        }
+
+        function markUsed(id) {
+            const items = getItems();
+            const item = items.find(i => i.id === id);
+            if (item) {
+                savedItems.push({...item,
+                    usedAt: new Date().toISOString()
+                });
+                localStorage.setItem('savedItems', JSON.stringify(savedItems));
+            }
+            saveItems(items.filter(i => i.id !== id));
+            renderCards();
+            updateHero();
+            updateBadges();
+            toast('🎉 Marked as used — great job reducing waste!');
+        }
+
+        function renderCards() {
+            const items = getItems();
+            const grid = document.getElementById('itemCards');
+            let filtered = items;
+            if (currentFilter === 'urgent') filtered = items.filter(i => {
+                const d = getDaysLeft(i);
+                return d > 0 && d <= 2;
+            });
+            if (currentFilter === 'warning') filtered = items.filter(i => {
+                const d = getDaysLeft(i);
+                return d > 2 && d <= 5;
+            });
+            if (currentFilter === 'fresh') filtered = items.filter(i => getDaysLeft(i) > 5);
+            if (filtered.length === 0) {
+                grid.innerHTML = `<div class="empty-state" style="grid-column:1/-1">
+      <div class="empty-icon">🥗</div>
+      <h3>${items.length===0?'Your kitchen is empty!':'No items in this category'}</h3>
+      <p>${items.length===0?'Add your first item above to get started.':'Try a different filter.'}</p>
+    </div>`;
+                return;
+            }
+            filtered.sort((a, b) => getDaysLeft(a) - getDaysLeft(b));
+            grid.innerHTML = filtered.map((item, i) => {
+                const days = getDaysLeft(item);
+                const cls = getCardClass(days);
+                const pct = Math.max(0, Math.min(100, (days / item.shelfLife) * 100));
+                const price = PRICES[item.name] || 15;
+                return `<div class="item-card ${cls}" style="animation-delay:${i*0.05}s">
+      <div class="card-storage-tag">${item.storage}</div>
+      <div class="card-name">${item.name}</div>
+      <div class="card-qty">Qty: ${item.qty} &nbsp;·&nbsp; Bought: ${item.date}</div>
+      <div class="days-badge">${daysLabel(days)}</div>
+      <div class="expiry-track"><div class="expiry-fill" style="width:${pct}%"></div></div>
+      <div class="card-price">Est. value: ₹${price*item.qty}</div>
+      <div class="card-actions">
+        <button class="used-btn" onclick="markUsed(${item.id})">✓ Mark Used</button>
+        <button class="remove-btn" onclick="removeItem(${item.id})">✕</button>
+      </div>
+    </div>`;
+            }).join('');
+        }
+
+        // ======================== MEALS ========================
+        function renderMealsPage() {
+            const key = getApiKey();
+            document.getElementById('api-notice').style.display = key ? 'none' : 'flex';
+            const expiring = getItems().filter(i => {
+                const d = getDaysLeft(i);
+                return d <= 4 && d > 0;
+            }).sort((a, b) => getDaysLeft(a) - getDaysLeft(b));
+            const preview = document.getElementById('expiring-preview');
+            if (expiring.length === 0) {
+                preview.innerHTML = '<p>No items expiring within 4 days — great! 🎉</p>';
+            } else {
+                preview.innerHTML = '<p>Using soon:</p>' +
+                    expiring.map(i => `<span class="ing-tag ${getDaysLeft(i)<=2?'urgent-tag':''}">${i.name} (${getDaysLeft(i)}d)</span>`).join('');
+            }
+        }
+
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (!key) {
+                toast('Please enter an API key!', true);
+                return;
+            }
+            localStorage.setItem('spoon_api_key', key);
+            document.getElementById('api-notice').style.display = 'none';
+            toast('✅ API key saved! Ready to find recipes.');
+        }
+
+        async function fetchMeals() {
+            const key = getApiKey();
+            if (!key) {
+                toast('Please save your Spoonacular API key first!', true);
+                return;
+            }
+            const expiring = getItems().filter(i => {
+                const d = getDaysLeft(i);
+                return d <= 4 && d > 0;
+            }).map(i => i.name);
+            if (expiring.length === 0) {
+                document.getElementById('mealCards').innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">🍽️</div><h3>No expiring items</h3><p>Add some groceries to get recipe ideas!</p></div>`;
+                return;
+            }
+            const btn = document.getElementById('find-btn');
+            btn.disabled = true;
+            btn.textContent = '⏳ Finding recipes…';
+            document.getElementById('mealCards').innerHTML = `<div class="loader" style="grid-column:1/-1"><div class="spinner"></div>Searching for the best recipes…</div>`;
+            try {
+                const res = await fetch(`https://api.spoonacular.com/recipes/findByIngredients?ingredients=${expiring.join(',')}&number=6&ranking=2&ignorePantry=true&apiKey=${key}`);
+                if (!res.ok) throw new Error('HTTP ' + res.status + ' — please check your API key');
+                const data = await res.json();
+                if (!data.length) {
+                    document.getElementById('mealCards').innerHTML = `<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">😕</div><h3>No recipes found</h3><p>Try adding more items to your inventory.</p></div>`;
+                    return;
+                }
+                document.getElementById('mealCards').innerHTML = data.map((r, i) => {
+                            const used = r.usedIngredients.map(x => x.name);
+                            const miss = r.missedIngredients.map(x => x.name);
+                            const missJSON = JSON.stringify(miss).replace(/"/g, "'");
+                            return `<div class="meal-card" style="animation-delay:${i*0.07}s" onclick="addToGrocery(${r.id},'${r.title.replace(/'/g,"\\'")}',${missJSON})">
+        ${r.image?`<img src="${r.image}" alt="${r.title}" loading="lazy">`:`<div class="meal-img-ph">🍲</div>`}
+        <div class="meal-info">
+          <h3>${r.title}</h3>
+          <div class="meal-tags">
+            ${used.slice(0,3).map(n=>`<span class="meal-tag">✓ ${n}</span>`).join('')}
+            ${miss.slice(0,2).map(n=>`<span class="meal-tag miss">+ ${n}</span>`).join('')}
+          </div>
+          <div class="meal-cta">🛒 Add missing ingredients →</div>
+        </div>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    document.getElementById('mealCards').innerHTML=`<div class="empty-state" style="grid-column:1/-1"><div class="empty-icon">⚠️</div><h3>Could not load recipes</h3><p>${e.message}</p></div>`;
+  } finally {
+    btn.disabled=false; btn.textContent='🔍 Find Recipes';
+  }
+}
+
+// ======================== GROCERY ========================
+function addToGrocery(id, title, missing) {
+  let added=0;
+  missing.forEach(name=>{
+    if(!groceryList.find(g=>g.name.toLowerCase()===name.toLowerCase())){
+      groceryList.push({id:Date.now()+Math.random(), name, recipe:title, bought:false});
+      added++;
+    }
+  });
+  localStorage.setItem('groceryList',JSON.stringify(groceryList));
+  updateBadges();
+  toast(`🛒 Added ${added} item${added!==1?'s':''} for "${title.substring(0,25)}…"`);
+}
+
+function toggleGrocery(id) {
+  groceryList=groceryList.map(g=>g.id===id?{...g,bought:!g.bought}:g);
+  localStorage.setItem('groceryList',JSON.stringify(groceryList));
+  updateBadges(); renderGroceryPage();
+}
+
+function clearBought() {
+  groceryList=groceryList.filter(g=>!g.bought);
+  localStorage.setItem('groceryList',JSON.stringify(groceryList));
+  updateBadges(); renderGroceryPage();
+  toast('🗑️ Cleared bought items');
+}
+
+function renderGroceryPage() {
+  const wrap=document.getElementById('grocery-header-wrap');
+  const container=document.getElementById('groceryItems');
+  const bought=groceryList.filter(g=>g.bought).length;
+  if(groceryList.length===0){
+    wrap.innerHTML='';
+    container.innerHTML=`<div class="empty-state"><div class="empty-icon">🛒</div><h3>Your grocery list is empty</h3><p>Go to Meal Ideas, pick a recipe, and missing ingredients will appear here!</p></div>`;
+    return;
+  }
+  wrap.innerHTML=`<div class="grocery-header">
+    <div><h3>Shopping List</h3><p>${groceryList.length-bought} item${groceryList.length-bought!==1?'s':''} remaining · ${bought} bought</p></div>
+    ${bought>0?`<button class="clear-btn" onclick="clearBought()">✕ Clear bought</button>`:''}
+  </div>`;
+  container.innerHTML=groceryList.map((g,i)=>`
+    <div class="grocery-item ${g.bought?'bought':''}" style="animation-delay:${i*0.04}s" onclick="toggleGrocery(${g.id})">
+      <div class="g-check">${g.bought?'✓':''}</div>
+      <span class="g-name">${g.name}</span>
+      <span class="g-recipe">${g.recipe?'for '+g.recipe.substring(0,22)+'…':''}</span>
+    </div>`).join('');
+}
+
+// ======================== SCORE ========================
+function renderScore() {
+  const items = getItems();
+  const used = savedItems;
+  const totalSaved = used.reduce((s,i)=>s+(PRICES[i.name]||15)*i.qty,0);
+  const inKitchen = items.filter(i=>getDaysLeft(i)>0).reduce((s,i)=>s+(PRICES[i.name]||15)*i.qty,0);
+  const expiredLost = items.filter(i=>getDaysLeft(i)<=0).reduce((s,i)=>s+(PRICES[i.name]||15)*i.qty,0);
+  const co2Saved = Math.round(used.length*0.4*10)/10;
+  document.getElementById('scoreContent').innerHTML=`
+    <div class="score-hero">
+      <div class="score-label">Total food value rescued from the bin</div>
+      <div class="score-amount">₹${totalSaved.toLocaleString('en-IN')}</div>
+      <div class="score-sub">${used.length} item${used.length!==1?'s':''} used before expiry 🎉</div>
+    </div>
+    <div class="score-cards">
+      <div class="score-card"><div class="sc-icon">🥗</div><div class="sc-val">${items.length}</div><div class="sc-label">Items tracked</div></div>
+      <div class="score-card"><div class="sc-icon">✅</div><div class="sc-val">${used.length}</div><div class="sc-label">Used in time</div></div>
+      <div class="score-card"><div class="sc-icon">💰</div><div class="sc-val">₹${inKitchen}</div><div class="sc-label">Value in kitchen now</div></div>
+      <div class="score-card"><div class="sc-icon">🌱</div><div class="sc-val">${co2Saved} kg</div><div class="sc-label">CO₂ avoided (est.)</div></div>
+      ${expiredLost>0?`<div class="score-card" style="border-top:3px solid var(--red)"><div class="sc-icon">😢</div><div class="sc-val" style="color:var(--red)">₹${expiredLost}</div><div class="sc-label">Lost to expiry</div></div>`:''}
+    </div>
+    ${items.length>0?`
+    <div class="inventory-breakdown">
+      <div class="breakdown-title">Current Inventory Breakdown</div>
+      ${items.sort((a,b)=>getDaysLeft(a)-getDaysLeft(b)).map(i=>{
+        const d=getDaysLeft(i);
+        const dot=d<=0?'⛔':d<=2?'🔴':d<=5?'🟡':'🟢';
+        return `<div class="breakdown-row"><span class="breakdown-name">${dot} ${i.name} ×${i.qty}</span><span class="breakdown-val">₹${(PRICES[i.name]||15)*i.qty} · ${d>0?d+'d left':'Expired'}</span></div>`;
+      }).join('')}
+    </div>`:''}`;
+}
+
+// ======================== TOAST & DEMO ========================
+let toastTimer;
+function toast(msg,isError=false){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.className='toast show'+(isError?' error':'');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),3200);
+}
+
+function loadDemo(){
+  if(getItems().length>0) return;
+  const d=n=>{const x=new Date(); x.setDate(x.getDate()-n); return x.toISOString().split('T')[0];};
+  saveItems([
+    {id:1,name:'spinach',qty:1,storage:'fridge',date:d(3),shelfLife:4},
+    {id:2,name:'milk',   qty:2,storage:'fridge',date:d(5),shelfLife:7},
+    {id:3,name:'tomato', qty:4,storage:'shelf', date:d(3),shelfLife:4},
+    {id:4,name:'chicken',qty:1,storage:'fridge',date:d(1),shelfLife:2},
+    {id:5,name:'bread',  qty:1,storage:'shelf', date:d(2),shelfLife:5},
+    {id:6,name:'egg',    qty:6,storage:'fridge',date:d(7),shelfLife:21},
+    {id:7,name:'paneer', qty:1,storage:'fridge',date:d(2),shelfLife:4},
+    {id:8,name:'butter', qty:1,storage:'fridge',date:d(1),shelfLife:30},
+  ]);
+}
+
+// ======================== INIT ========================
+loadDemo();
+renderCards();
+updateHero();
+updateBadges();
+    </script>
 </body>
 
 </html>
